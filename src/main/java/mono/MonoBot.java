@@ -1,29 +1,39 @@
 package mono;
+import mono.Task;
 
 public class MonoBot {
-    private String[] history;
+    private Task[] history;
+    private Boolean[] marked;
     private int messageCount = 0;
 
     public MonoBot() {
-        this.history = new String[100];
+        this.history = new Task[100];
     }
 
     public void add(String input) {
-        System.out.println(
+        System.out.print(
                 "____________________________________________________________\n" +
                         "added: " + input + "\n" +
                         "____________________________________________________________\n"
         );
-        String message = String.format("%d. %s", ++this.messageCount, input);
-        this.history[messageCount - 1] = message;
+        Task task = new Task(input);
+        this.history[messageCount] = task;
+        this.messageCount += 1;
     }
 
     public void list() {
-        System.out.println("____________________________________________________________\n");
+        System.out.print(
+                """
+                        ____________________________________________________________
+                        Here are the tasks in your list:
+                        """
+        );
         for (int i = 0; i < this.messageCount; i++) {
-            System.out.println(this.history[i]);
+            Task task = this.history[i];
+            String item = String.format("%d.%s", i + 1, task);
+            System.out.println(item);
         }
-        System.out.println("____________________________________________________________\n");
+        System.out.println("____________________________________________________________");
     }
 
     public void greet() {
@@ -39,7 +49,7 @@ public class MonoBot {
                         "Hello! I'm Mono.\n" +
                         "What can I do for you?\n" +
                         "____________________________________________________________\n", banner);
-        System.out.println(greetingMessage);
+        System.out.print(greetingMessage);
     }
 
     public void exit() {
@@ -47,6 +57,6 @@ public class MonoBot {
                 "____________________________________________________________\n"+
                         "Bye. Hope to see you again soon!\n" +
                         "____________________________________________________________\n";
-        System.out.println(exitMessage);
+        System.out.print(exitMessage);
     }
 }

@@ -1,5 +1,6 @@
 package mono;
 import mono.exception.WrongFormatException;
+import mono.exception.NonExistentException;
 import mono.task.*;
 import java.util.ArrayList;
 
@@ -67,6 +68,33 @@ public class MonoBot {
         );
     }
 
+    /**
+     * Verifies that a one-based task ID refers to a task in the list.
+     *
+     * @param id one-based task ID
+     * @throws NonExistentException if no task has the given ID
+     */
+    private void validateTaskId(int id) throws NonExistentException {
+        if (id < 1 || id > this.tasks.size()) {
+            throw new NonExistentException("Task " + id + " does not exist.");
+        }
+    }
+
+    public void delete(int id) throws NonExistentException {
+        validateTaskId(id);
+        Task task = this.tasks.get(id - 1);
+        this.tasks.remove(id - 1);
+        this.messageCount -= 1;
+
+        System.out.print(
+                "____________________________________________________________\n" +
+                        "Noted. I've removed this task:\n" +
+                        task + "\n" +
+                        "Now you have " + this.tasks.size() + " tasks in the list.\n" +
+                        "____________________________________________________________\n"
+        );
+    }
+
     public void list() {
         System.out.print(
                 """
@@ -82,7 +110,8 @@ public class MonoBot {
         System.out.println("____________________________________________________________");
     }
 
-    public void markTaskDone(int id) {
+    public void markTaskDone(int id) throws NonExistentException {
+        validateTaskId(id);
         Task task = this.tasks.get(id - 1);
         task.markDone();
         System.out.print(
@@ -95,7 +124,8 @@ public class MonoBot {
         );
     }
 
-    public void unmarkTaskDone(int id) {
+    public void unmarkTaskDone(int id) throws NonExistentException {
+        validateTaskId(id);
         Task task = this.tasks.get(id - 1);
         task.unmarkDone();
         System.out.print(

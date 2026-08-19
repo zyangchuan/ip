@@ -17,6 +17,11 @@ public class MonoBot {
         if (input.startsWith("todo")) {
             String name = input.substring(5);
             task = new ToDo(name);
+        } else if (input.startsWith("deadline")) {
+            int datetimeIndex = input.lastIndexOf('/');
+            String name = input.substring(9, datetimeIndex - 1);
+            String datetime = input.substring(datetimeIndex + 4);
+            task = new Deadline(name, datetime);
         } else {
             task = new Task(input);
         }

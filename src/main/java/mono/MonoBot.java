@@ -1,13 +1,14 @@
 package mono;
 import mono.Task;
+import java.util.ArrayList;
 
 public class MonoBot {
-    private Task[] history;
+    private ArrayList<Task> tasks;
     private Boolean[] marked;
     private int messageCount = 0;
 
     public MonoBot() {
-        this.history = new Task[100];
+        this.tasks = new ArrayList<>();
     }
 
     public void add(String input) {
@@ -17,7 +18,7 @@ public class MonoBot {
                         "____________________________________________________________\n"
         );
         Task task = new Task(input);
-        this.history[messageCount] = task;
+        this.tasks.add(task);
         this.messageCount += 1;
     }
 
@@ -29,12 +30,37 @@ public class MonoBot {
                         """
         );
         for (int i = 0; i < this.messageCount; i++) {
-            Task task = this.history[i];
+            Task task = this.tasks.get(i);
             String item = String.format("%d.%s", i + 1, task);
             System.out.println(item);
         }
         System.out.println("____________________________________________________________");
     }
+
+    public void markTaskDone(int id) {
+        Task task = this.tasks.get(id - 1);
+        task.markDone();
+        System.out.print(
+                """
+                        ____________________________________________________________
+                        Nice! I've marked this task as done:
+                        """
+                + task + "\n"
+        );
+    }
+
+    public void unmarkTaskDone(int id) {
+        Task task = this.tasks.get(id - 1);
+        task.unmarkDone();
+        System.out.print(
+                """
+                        ____________________________________________________________
+                        OK, I've marked this task as not done yet:
+                        """
+                        + task + "\n"
+        );
+    }
+
 
     public void greet() {
         String banner = "███╗   ███╗ ██████╗ ███╗   ██╗ ██████╗ \n" +

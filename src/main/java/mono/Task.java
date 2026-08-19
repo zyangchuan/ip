@@ -1,15 +1,23 @@
 package mono;
 
-public class Task {
-    private String name;
-    private Boolean done;
+class Task {
+    private final String name;
+    private Boolean isDone;
 
     public Task(String name) {
         this.name = name;
-        this.done = false;
+        this.isDone = false;
+    }
+
+    public void markDone() {
+        this.isDone = true;
+    }
+
+    public void unmarkDone() {
+        this.isDone = false;
     }
 
     public String toString() {
-        return String.format("[%s] %s", this.done ? "X" : " ", this.name);
+        return String.format("[%s] %s", this.isDone ? "X" : " ", this.name);
     }
 }

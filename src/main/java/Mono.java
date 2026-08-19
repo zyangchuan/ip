@@ -14,17 +14,22 @@ public class Mono {
                 String input = "";
                 input = scanner.nextLine();
 
-                if (input.equals("list")) {
-                    bot.list();
-                    continue;
-                }
-
                 if (input.equals("bye")) {
                     bot.exit();
                     break;
                 }
 
-                bot.add(input);
+                if (input.equals("list")) {
+                    bot.list();
+                } else if (input.startsWith("mark")) {
+                    int id = Integer.parseInt(input.substring(5));
+                    bot.markTaskDone(id);
+                } else if (input.startsWith("unmark")) {
+                    int id = Integer.parseInt(input.substring(7));
+                    bot.unmarkTaskDone(id);
+                } else {
+                    bot.add(input);
+                }
             }
         } finally {
             scanner.close();

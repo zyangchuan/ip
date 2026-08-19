@@ -1,4 +1,5 @@
 import mono.MonoBot;
+import mono.CommandType;
 import mono.exception.*;
 import java.util.Scanner;
 
@@ -32,35 +33,42 @@ public class Mono {
         bot.greet();
 
         try {
+            commandLoop:
             while (true) {
-                String input = "";
-                input = scanner.nextLine();
+                String input = scanner.nextLine().trim();
 
                 try {
                     if (input.isEmpty()) {
                         throw new EmptyCommandException("Error: Command cannot be empty!");
                     }
 
-                    if (input.equals("bye")) {
-                        bot.exit();
-                        break;
+                    CommandType commandType = CommandType.fromInput(input);
+                    if (commandType == null) {
+                        throw new UnknownCommandException("Error: Command is unknown.");
                     }
 
-                    if (input.equals("list")) {
+                    switch (commandType) {
+                    case BYE:
+                        bot.exit();
+                        break commandLoop;
+                    case LIST:
                         bot.list();
-                    } else if (input.equals("mark") || input.startsWith("mark ")) {
-                        int id = parseTaskId(input, "mark");
-                        bot.markTaskDone(id);
-                    } else if (input.equals("unmark") || input.startsWith("unmark ")) {
-                        int id = parseTaskId(input, "unmark");
-                        bot.unmarkTaskDone(id);
-                    } else if (input.startsWith("todo ") || input.startsWith("deadline ")
-                            || input.startsWith("event ")) {
+                        break;
+                    case MARK:
+                        bot.markTaskDone(parseTaskId(input, commandType.getKeyword()));
+                        break;
+                    case UNMARK:
+                        bot.unmarkTaskDone(parseTaskId(input, commandType.getKeyword()));
+                        break;
+                    case TODO:
+                    case DEADLINE:
+                    case EVENT:
                         bot.add(input);
-                    } else if (input.equals("delete") || input.startsWith("delete ")) {
-                        int id = parseTaskId(input, "delete");
-                        bot.delete(id);
-                    } else {
+                        break;
+                    case DELETE:
+                        bot.delete(parseTaskId(input, commandType.getKeyword()));
+                        break;
+                    default:
                         throw new UnknownCommandException("Error: Command is unknown.");
                     }
 

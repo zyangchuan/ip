@@ -1,8 +1,8 @@
-package mono;
+package mono.task;
 
-class Task {
-    private final String name;
-    private Boolean isDone;
+public class Task {
+    protected final String name;
+    protected Boolean isDone;
 
     public Task(String name) {
         this.name = name;

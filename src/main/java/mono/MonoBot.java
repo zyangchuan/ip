@@ -1,9 +1,9 @@
 package mono;
-import mono.Task;
+import mono.task.*;
 import java.util.ArrayList;
 
 public class MonoBot {
-    private ArrayList<Task> tasks;
+    private final ArrayList<Task> tasks;
     private Boolean[] marked;
     private int messageCount = 0;
 

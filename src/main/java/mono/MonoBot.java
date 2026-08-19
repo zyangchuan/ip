@@ -1,4 +1,5 @@
 package mono;
+import mono.exception.WrongFormatException;
 import mono.task.*;
 import java.util.ArrayList;
 
@@ -11,20 +12,41 @@ public class MonoBot {
         this.tasks = new ArrayList<>();
     }
 
-    public void add(String input) {
+    /**
+     * Adds a task described by the user's command.
+     *
+     * @param input task command entered by the user
+     * @throws WrongFormatException if a todo, deadline, or event command is malformed
+     */
+    public void add(String input) throws WrongFormatException {
         Task task;
 
-        if (input.startsWith("todo")) {
-            String name = input.substring(5);
+        if (input.equals("todo") || input.startsWith("todo ")) {
+            if (input.equals("todo")) {
+                throw new WrongFormatException("Todo format: todo <description>");
+            }
+            String name = input.substring("todo ".length()).trim();
+            if (name.isEmpty()) {
+                throw new WrongFormatException("Todo format: todo <description>");
+            }
             task = new ToDo(name);
-        } else if (input.startsWith("deadline")) {
+        } else if (input.equals("deadline") || input.startsWith("deadline ")) {
             int datetimeIndex = input.lastIndexOf("/by");
+            if (datetimeIndex <= 9 || input.substring(datetimeIndex + 3).trim().isEmpty()) {
+                throw new WrongFormatException(
+                        "Deadline format: deadline <description> /by <date/time>");
+            }
             String name = input.substring(9, datetimeIndex - 1);
             String datetime = input.substring(datetimeIndex + 4);
             task = new Deadline(name, datetime);
-        } else if (input.startsWith("event")) {
+        } else if (input.equals("event") || input.startsWith("event ")) {
             int fromIndex = input.lastIndexOf("/from");
             int toIndex = input.lastIndexOf("/to");
+            if (fromIndex <= 6 || toIndex <= fromIndex + 6
+                    || input.substring(toIndex + 3).trim().isEmpty()) {
+                throw new WrongFormatException(
+                        "Event format: event <description> /from <start> /to <end>");
+            }
             String name = input.substring(6, fromIndex - 1);
             String startDatetime = input.substring(fromIndex + 6, toIndex - 1);
             String endDatetime = input.substring(toIndex + 4);

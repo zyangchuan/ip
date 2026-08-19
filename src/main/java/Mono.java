@@ -6,6 +6,16 @@ public class Mono {
                         "██║╚██╔╝██║██║   ██║██║╚██╗██║██║   ██║\n" +
                         "██║ ╚═╝ ██║╚██████╔╝██║ ╚████║╚██████╔╝\n" +
                         "╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝ ";
-        System.out.println(banner);
+
+        String exitMessage = String.format(
+                        "____________________________________________________________\n" +
+                        "%s\n" +
+                        "Hello! I'm Mono.\n" +
+                        "What can I do for you?\n" +
+                        "____________________________________________________________\n" +
+                        "Bye. Hope to see you again soon!\n" +
+                        "____________________________________________________________\n", banner);
+
+        System.out.println(exitMessage);
     }
 }

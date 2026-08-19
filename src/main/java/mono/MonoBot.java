@@ -18,10 +18,17 @@ public class MonoBot {
             String name = input.substring(5);
             task = new ToDo(name);
         } else if (input.startsWith("deadline")) {
-            int datetimeIndex = input.lastIndexOf('/');
+            int datetimeIndex = input.lastIndexOf("/by");
             String name = input.substring(9, datetimeIndex - 1);
             String datetime = input.substring(datetimeIndex + 4);
             task = new Deadline(name, datetime);
+        } else if (input.startsWith("event")) {
+            int fromIndex = input.lastIndexOf("/from");
+            int toIndex = input.lastIndexOf("/to");
+            String name = input.substring(6, fromIndex - 1);
+            String startDatetime = input.substring(fromIndex + 6, toIndex - 1);
+            String endDatetime = input.substring(toIndex + 4);
+            task = new Event(name, startDatetime, endDatetime);
         } else {
             task = new Task(input);
         }
@@ -61,7 +68,8 @@ public class MonoBot {
                         ____________________________________________________________
                         Nice! I've marked this task as done:
                         """
-                + task + "\n"
+                        + task + "\n" +
+                        "____________________________________________________________\n"
         );
     }
 
@@ -73,7 +81,8 @@ public class MonoBot {
                         ____________________________________________________________
                         OK, I've marked this task as not done yet:
                         """
-                        + task + "\n"
+                        + task + "\n" +
+                        "____________________________________________________________\n"
         );
     }
 

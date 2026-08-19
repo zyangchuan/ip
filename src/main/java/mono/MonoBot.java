@@ -12,14 +12,25 @@ public class MonoBot {
     }
 
     public void add(String input) {
-        System.out.print(
-                "____________________________________________________________\n" +
-                        "added: " + input + "\n" +
-                        "____________________________________________________________\n"
-        );
-        Task task = new Task(input);
+        Task task;
+
+        if (input.startsWith("todo")) {
+            String name = input.substring(5);
+            task = new ToDo(name);
+        } else {
+            task = new Task(input);
+        }
+
         this.tasks.add(task);
         this.messageCount += 1;
+
+        System.out.print(
+                "____________________________________________________________\n" +
+                        "Got it. I've added this task:\n" +
+                        task + "\n" +
+                        "Now you have " + this.tasks.size() + " tasks in the list.\n" +
+                        "____________________________________________________________\n"
+        );
     }
 
     public void list() {

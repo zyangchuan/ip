@@ -27,20 +27,6 @@ public class Event extends Task {
         this.endDate = LocalDate.parse(endDateText, DateTimeFormatter.ISO_LOCAL_DATE);
     }
 
-    /**
-     * Returns the event's stable, pipe-delimited save-file representation.
-     *
-     * @return task type, completion status, name, start time, and end time
-     */
-    @Override
-    public String toFileString() {
-        return String.format(
-                "E | %d | %s | %s | %s",
-                super.isDone ? 1 : 0,
-                super.name,
-                this.startDate,
-                this.endDate);
-    }
     public String toString() {
         return String.format(
                 "[E][%s] %s (from: %s to: %s)",

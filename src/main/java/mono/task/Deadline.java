@@ -24,15 +24,6 @@ public class Deadline extends Task {
         this.date = LocalDate.parse(dateText, DateTimeFormatter.ISO_LOCAL_DATE);
     }
 
-    /**
-     * Returns the deadline's stable, pipe-delimited save-file representation.
-     *
-     * @return task type, completion status, name, and deadline
-     */
-    @Override
-    public String toFileString() {
-        return String.format("D | %d | %s | %s", super.isDone ? 1 : 0, super.name, this.date);
-    }
     public String toString() {
         return String.format(
                 "[D][%s] %s (by: %s)",

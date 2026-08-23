@@ -31,7 +31,7 @@ public class Deadline extends Task {
      */
     @Override
     public String toFileString() {
-        return String.format("D | %d | %s | %s", super.isDone ? 1 : 0, super.name, this.datetime);
+        return String.format("D | %d | %s | %s", super.isDone ? 1 : 0, super.name, this.date);
     }
 
     public String toString() {

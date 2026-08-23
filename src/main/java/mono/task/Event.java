@@ -38,8 +38,8 @@ public class Event extends Task {
                 "E | %d | %s | %s | %s",
                 super.isDone ? 1 : 0,
                 super.name,
-                this.startDatetime,
-                this.endDatetime);
+                this.startDate,
+                this.endDate);
     }
 
     public String toString() {

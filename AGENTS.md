@@ -33,3 +33,46 @@ Ensure that Java 25 is used when running the application or build tasks. On macO
 Use lightweight tags unless the user requests an annotated tag.
 When proposing or creating a commit message, include enough detail to explain the rationale for the change.
 Do not commit or push unless explicitly asked.
+
+## Git commit message style:
+
+Use the following structure for git messages:
+
+{current situation} -- use present tense
+
+{why it needs to change} -- explain rationale behind the commit
+
+{what is being done about it} -- use imperative mood
+
+{why it is done that way}
+
+{any other relevant info}
+
+
+Do not use bullet points. Split into paragraphs when applicable.
+
+You may add a <scope>: or <category>: in front, when applicable.
+e.g. Person class: Remove static imports
+Main.java: Remove blank lines
+bug fix: Add space after name
+chore: Update release date
+
+Use the following example of git message as a guide:
+
+Person attributes classes: extract a parent class PersonAttribute
+
+Person attribute classes (e.g. Name, Address, Age etc.) have some common
+behaviors (e.g. isValid()).
+
+The common behaviors across person attribute classes cause code duplication.
+
+Extracting the common behavior into a super class allows us to use
+polymorphism when dealing with person attributes. For example, validity
+checking can be done for all attributes of a person in one loop.
+
+Let's pull up behaviors common to all person attribute classes into a new
+parent class named PersonAttribute.
+
+Using inheritance is preferable over composition in this situation
+because the common behaviors are not composable.
+

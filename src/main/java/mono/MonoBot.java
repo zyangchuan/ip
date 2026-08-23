@@ -3,18 +3,28 @@ import mono.exception.NonExistentException;
 import mono.task.Task;
 import java.util.ArrayList;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.File;
+
 /**
  * Stores Mono's tasks and performs operations requested by tools.
  */
 public class MonoBot {
     private final ArrayList<Task> tasks;
     private int messageCount = 0;
+    private static final String FILE_PATH = "./data/tasks.txt";
 
     /**
      * Creates an empty chatbot task list.
      */
     public MonoBot() {
         this.tasks = new ArrayList<>();
+        try {
+            ensureStorageFile();
+        } catch (IOException e) {
+            System.out.println("Unable to create task file: " + e.getMessage());
+        }
     }
 
     /**
@@ -26,6 +36,8 @@ public class MonoBot {
         this.tasks.add(task);
         this.messageCount += 1;
 
+        appendTask(task);
+
         System.out.print(
                 "____________________________________________________________\n" +
                         "Got it. I've added this task:\n" +
@@ -33,6 +45,41 @@ public class MonoBot {
                         "Now you have " + this.tasks.size() + " tasks in the list.\n" +
                         "____________________________________________________________\n"
         );
+    }
+
+    /**
+     * Appends one newly added task to the existing save file.
+     *
+     * @param task task to append
+     */
+    private void appendTask(Task task) {
+        try {
+            ensureStorageFile();
+            try (FileWriter writer = new FileWriter(MonoBot.FILE_PATH, true)) {
+                writer.write(task.toFileString());
+                writer.write(System.lineSeparator());
+            }
+        } catch (IOException e) {
+            System.out.println("Unable to append task: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Creates Mono's data directory and task file when they do not exist.
+     *
+     * @throws IOException if the directory or file cannot be created
+     */
+    private void ensureStorageFile() throws IOException {
+        File file = new File(MonoBot.FILE_PATH);
+        File parent = file.getParentFile();
+        if (parent != null && !parent.exists()
+                && !parent.mkdirs() && !parent.isDirectory()) {
+            throw new IOException("Unable to create directory " + parent);
+        }
+
+        if (!file.exists() && !file.createNewFile()) {
+            throw new IOException("Unable to create file " + file);
+        }
     }
 
     /**

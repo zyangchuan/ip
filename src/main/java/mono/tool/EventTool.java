@@ -5,6 +5,8 @@ import mono.exception.MonoException;
 import mono.exception.WrongFormatException;
 import mono.task.Event;
 
+import java.time.format.DateTimeParseException;
+
 /**
  * Creates an event task from a description, start time, and end time.
  */
@@ -18,19 +20,24 @@ public class EventTool implements Tool {
         int toIndex = arguments.indexOf(TO_MARKER);
         if (fromIndex <= 0 || toIndex <= fromIndex + FROM_MARKER.length()) {
             throw new WrongFormatException(
-                    "Event format: event <description> /from <start> /to <end>");
+                    "Event format: event <description> /from <start-date> /to <end-date>");
         }
 
         String description = arguments.substring(0, fromIndex).trim();
-        String startDatetime = arguments
+        String startDateText = arguments
                 .substring(fromIndex + FROM_MARKER.length(), toIndex).trim();
-        String endDatetime = arguments.substring(toIndex + TO_MARKER.length()).trim();
-        if (description.isEmpty() || startDatetime.isEmpty() || endDatetime.isEmpty()) {
+        String endDateText = arguments.substring(toIndex + TO_MARKER.length()).trim();
+        if (description.isEmpty() || startDateText.isEmpty() || endDateText.isEmpty()) {
             throw new WrongFormatException(
-                    "Event format: event <description> /from <start> /to <end>");
+                    "Event format: event <description> /from <start-date> /to <end-date>");
         }
 
-        bot.addTask(new Event(description, startDatetime, endDatetime));
+        try {
+            bot.addTask(new Event(description, startDateText, endDateText));
+        } catch (DateTimeParseException e) {
+            throw new WrongFormatException(
+                    "Event dates must use the format yyyy-MM-dd (for example, 2019-10-15)");
+        }
         return ToolSignal.CONTINUE;
     }
 }

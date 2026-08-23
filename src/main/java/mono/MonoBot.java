@@ -1,61 +1,28 @@
 package mono;
-import mono.exception.WrongFormatException;
 import mono.exception.NonExistentException;
-import mono.task.*;
+import mono.task.Task;
 import java.util.ArrayList;
 
+/**
+ * Stores Mono's tasks and performs operations requested by tools.
+ */
 public class MonoBot {
     private final ArrayList<Task> tasks;
-    private Boolean[] marked;
     private int messageCount = 0;
 
+    /**
+     * Creates an empty chatbot task list.
+     */
     public MonoBot() {
         this.tasks = new ArrayList<>();
     }
 
     /**
-     * Adds a task described by the user's command.
+     * Adds a validated task to the list.
      *
-     * @param input task command entered by the user
-     * @throws WrongFormatException if a todo, deadline, or event command is malformed
+     * @param task validated task to add
      */
-    public void add(String input) throws WrongFormatException {
-        Task task;
-
-        if (input.equals("todo") || input.startsWith("todo ")) {
-            if (input.equals("todo")) {
-                throw new WrongFormatException("Todo format: todo <description>");
-            }
-            String name = input.substring("todo ".length()).trim();
-            if (name.isEmpty()) {
-                throw new WrongFormatException("Todo format: todo <description>");
-            }
-            task = new ToDo(name);
-        } else if (input.equals("deadline") || input.startsWith("deadline ")) {
-            int datetimeIndex = input.lastIndexOf("/by");
-            if (datetimeIndex <= 9 || input.substring(datetimeIndex + 3).trim().isEmpty()) {
-                throw new WrongFormatException(
-                        "Deadline format: deadline <description> /by <date/time>");
-            }
-            String name = input.substring(9, datetimeIndex - 1);
-            String datetime = input.substring(datetimeIndex + 4);
-            task = new Deadline(name, datetime);
-        } else if (input.equals("event") || input.startsWith("event ")) {
-            int fromIndex = input.lastIndexOf("/from");
-            int toIndex = input.lastIndexOf("/to");
-            if (fromIndex <= 6 || toIndex <= fromIndex + 6
-                    || input.substring(toIndex + 3).trim().isEmpty()) {
-                throw new WrongFormatException(
-                        "Event format: event <description> /from <start> /to <end>");
-            }
-            String name = input.substring(6, fromIndex - 1);
-            String startDatetime = input.substring(fromIndex + 6, toIndex - 1);
-            String endDatetime = input.substring(toIndex + 4);
-            task = new Event(name, startDatetime, endDatetime);
-        } else {
-            task = new Task(input);
-        }
-
+    public void addTask(Task task) {
         this.tasks.add(task);
         this.messageCount += 1;
 
@@ -80,6 +47,12 @@ public class MonoBot {
         }
     }
 
+    /**
+     * Deletes a task using its one-based list ID.
+     *
+     * @param id one-based task ID
+     * @throws NonExistentException if no task has the given ID
+     */
     public void delete(int id) throws NonExistentException {
         validateTaskId(id);
         Task task = this.tasks.get(id - 1);
@@ -95,7 +68,10 @@ public class MonoBot {
         );
     }
 
-    public void list() {
+    /**
+     * Prints every task currently stored by Mono.
+     */
+    public void listTasks() {
         System.out.print(
                 """
                         ____________________________________________________________
@@ -110,6 +86,12 @@ public class MonoBot {
         System.out.println("____________________________________________________________");
     }
 
+    /**
+     * Marks a task as completed.
+     *
+     * @param id one-based task ID
+     * @throws NonExistentException if no task has the given ID
+     */
     public void markTaskDone(int id) throws NonExistentException {
         validateTaskId(id);
         Task task = this.tasks.get(id - 1);
@@ -124,6 +106,12 @@ public class MonoBot {
         );
     }
 
+    /**
+     * Marks a task as not completed.
+     *
+     * @param id one-based task ID
+     * @throws NonExistentException if no task has the given ID
+     */
     public void unmarkTaskDone(int id) throws NonExistentException {
         validateTaskId(id);
         Task task = this.tasks.get(id - 1);
@@ -137,8 +125,9 @@ public class MonoBot {
                         "____________________________________________________________\n"
         );
     }
-
-
+    /**
+     * Prints Mono's banner and greeting message.
+     */
     public void greet() {
         String banner = "███╗   ███╗ ██████╗ ███╗   ██╗ ██████╗ \n" +
                 "████╗ ████║██╔═══██╗████╗  ██║██╔═══██╗\n" +
@@ -155,6 +144,9 @@ public class MonoBot {
         System.out.print(greetingMessage);
     }
 
+    /**
+     * Prints Mono's farewell message.
+     */
     public void exit() {
         String exitMessage =
                 "____________________________________________________________\n"+

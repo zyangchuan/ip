@@ -22,13 +22,14 @@ public class Mono {
         bot.greet();
 
         try (Scanner scanner = new Scanner(System.in)) {
-            boolean shouldExit = false;
-            while (scanner.hasNextLine() && !shouldExit) {
+            while (scanner.hasNextLine()) {
                 try {
                     InputParser.ToolInput input = InputParser.parse(scanner.nextLine());
                     Tool tool = registry.get(input.name());
                     ToolSignal signal = tool.invoke(input.arguments(), bot);
-                    shouldExit = signal == ToolSignal.EXIT;
+                    if (signal == ToolSignal.EXIT) {
+                        break;
+                    }
                 } catch (MonoException e) {
                     printError(e);
                 }

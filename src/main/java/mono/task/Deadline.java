@@ -1,15 +1,13 @@
 package mono.task;
 
+import mono.parser.DateParser;
+
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 
 /**
  * A task that must be completed by a specific calendar date.
  */
 public class Deadline extends Task {
-    private static final DateTimeFormatter DISPLAY_FORMAT =
-            DateTimeFormatter.ofPattern("MMM dd yyyy", Locale.ENGLISH);
     private final LocalDate date;
 
     /**
@@ -21,7 +19,7 @@ public class Deadline extends Task {
      */
     public Deadline(String name, String dateText) {
         super(name);
-        this.date = LocalDate.parse(dateText, DateTimeFormatter.ISO_LOCAL_DATE);
+        this.date = DateParser.parseDate(dateText);
     }
 
     /**
@@ -39,6 +37,6 @@ public class Deadline extends Task {
                 "[D][%s] %s (by: %s)",
                 super.isDone ? "X" : " ",
                 super.name,
-                this.date.format(DISPLAY_FORMAT));
+                DateParser.formatDate(this.date));
     }
 }

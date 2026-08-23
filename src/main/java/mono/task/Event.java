@@ -1,15 +1,13 @@
 package mono.task;
 
+import mono.parser.DateParser;
+
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 
 /**
  * A task that takes place between two calendar dates.
  */
 public class Event extends Task {
-    private static final DateTimeFormatter DISPLAY_FORMAT =
-            DateTimeFormatter.ofPattern("MMM dd yyyy", Locale.ENGLISH);
     private final LocalDate startDate;
     private final LocalDate endDate;
 
@@ -23,8 +21,8 @@ public class Event extends Task {
      */
     public Event(String name, String startDateText, String endDateText) {
         super(name);
-        this.startDate = LocalDate.parse(startDateText, DateTimeFormatter.ISO_LOCAL_DATE);
-        this.endDate = LocalDate.parse(endDateText, DateTimeFormatter.ISO_LOCAL_DATE);
+        this.startDate = DateParser.parseDate(startDateText);
+        this.endDate = DateParser.parseDate(endDateText);
     }
 
     /**
@@ -47,7 +45,7 @@ public class Event extends Task {
                 "[E][%s] %s (from: %s to: %s)",
                 super.isDone ? "X" : " ",
                 super.name,
-                this.startDate.format(DISPLAY_FORMAT),
-                this.endDate.format(DISPLAY_FORMAT));
+                DateParser.formatDate(this.startDate),
+                DateParser.formatDate(this.endDate));
     }
 }

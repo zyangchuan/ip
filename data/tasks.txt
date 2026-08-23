@@ -1,3 +1,2 @@
-T | 1 | eat shit
-T | 0 | eat shit
-D | 1 | niu bi | today
+T | 0 | whattp
+D | 0 | eat shit | 2019-05-02

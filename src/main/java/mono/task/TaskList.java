@@ -5,6 +5,7 @@ import mono.storage.Storage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Owns Mono's task collection and all operations that change or display it.
@@ -26,16 +27,10 @@ public class TaskList {
      *
      * @param task task to add
      */
-    public void addTask(Task task) {
+    public Task addTask(Task task) {
         this.tasks.add(task);
         saveTasks();
-        System.out.print(
-                "____________________________________________________________\n" +
-                        "Got it. I've added this task:\n" +
-                        task + "\n" +
-                        "Now you have " + this.tasks.size() + " tasks in the list.\n" +
-                        "____________________________________________________________\n"
-        );
+        return task;
     }
 
     /**
@@ -44,33 +39,18 @@ public class TaskList {
      * @param id one-based task ID
      * @throws NonExistentException if the ID is invalid
      */
-    public void delete(int id) throws NonExistentException {
+    public Task delete(int id) throws NonExistentException {
         validateTaskId(id);
         Task task = this.tasks.remove(id - 1);
         saveTasks();
-        System.out.print(
-                "____________________________________________________________\n" +
-                        "Noted. I've removed this task:\n" +
-                        task + "\n" +
-                        "Now you have " + this.tasks.size() + " tasks in the list.\n" +
-                        "____________________________________________________________\n"
-        );
+        return task;
     }
 
     /**
      * Prints the current tasks with one-based IDs.
      */
-    public void listTasks() {
-        System.out.print(
-                """
-                        ____________________________________________________________
-                        Here are the tasks in your list:
-                        """
-        );
-        for (int i = 0; i < this.tasks.size(); i++) {
-            System.out.println(String.format("%d.%s", i + 1, this.tasks.get(i)));
-        }
-        System.out.println("____________________________________________________________");
+    public List<Task> getTasks() {
+        return List.copyOf(this.tasks);
     }
 
     /**
@@ -79,17 +59,12 @@ public class TaskList {
      * @param id one-based task ID
      * @throws NonExistentException if the ID is invalid
      */
-    public void markTaskDone(int id) throws NonExistentException {
+    public Task markTaskDone(int id) throws NonExistentException {
         validateTaskId(id);
         Task task = this.tasks.get(id - 1);
         task.markDone();
         saveTasks();
-        System.out.print(
-                "____________________________________________________________\n" +
-                        "Nice! I've marked this task as done:\n" +
-                        task + "\n" +
-                        "____________________________________________________________\n"
-        );
+        return task;
     }
 
     /**
@@ -98,17 +73,12 @@ public class TaskList {
      * @param id one-based task ID
      * @throws NonExistentException if the ID is invalid
      */
-    public void unmarkTaskDone(int id) throws NonExistentException {
+    public Task unmarkTaskDone(int id) throws NonExistentException {
         validateTaskId(id);
         Task task = this.tasks.get(id - 1);
         task.unmarkDone();
         saveTasks();
-        System.out.print(
-                "____________________________________________________________\n" +
-                        "OK, I've marked this task as not done yet:\n" +
-                        task + "\n" +
-                        "____________________________________________________________\n"
-        );
+        return task;
     }
 
     /**

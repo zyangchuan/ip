@@ -6,6 +6,7 @@ import mono.storage.Storage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Owns Mono's task collection and all operations that change or display it.
@@ -51,6 +52,21 @@ public class TaskList {
      */
     public List<Task> getTasks() {
         return List.copyOf(this.tasks);
+    }
+
+    /**
+     * Finds tasks whose names contain a keyword, preserving their list order.
+     * Matching is case-sensitive.
+     *
+     * @param keyword text to find in each task name
+     * @return immutable list of matching tasks
+     * @throws NullPointerException if {@code keyword} is {@code null}
+     */
+    public List<Task> findTasks(String keyword) {
+        Objects.requireNonNull(keyword, "keyword");
+        return this.tasks.stream()
+                .filter(task -> task.name.contains(keyword))
+                .toList();
     }
 
     /**

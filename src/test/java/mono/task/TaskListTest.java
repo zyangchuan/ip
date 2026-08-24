@@ -116,6 +116,61 @@ public class TaskListTest {
         assertEquals(1, taskList.getTasks().size());
     }
 
+    @Test
+    public void findTasks_keywordInSomeTaskNames_returnsMatchesInListOrder() {
+        TaskList taskList = new TaskList();
+        Task firstMatch = taskList.addTask(new ToDo("read a book"));
+        taskList.addTask(new ToDo("buy groceries"));
+        Task secondMatch = taskList.addTask(new ToDo("reread lecture notes"));
+
+        List<Task> matches = taskList.findTasks("read");
+
+        assertEquals(List.of(firstMatch, secondMatch), matches);
+    }
+
+    @Test
+    public void findTasks_keywordNotInAnyTaskName_returnsEmptyList() {
+        TaskList taskList = taskListWithOneTask();
+
+        assertEquals(List.of(), taskList.findTasks("missing"));
+    }
+
+    @Test
+    public void findTasks_keywordWithDifferentCase_returnsOnlyExactCaseMatches() {
+        TaskList taskList = new TaskList();
+        Task uppercaseMatch = taskList.addTask(new ToDo("Read a book"));
+        taskList.addTask(new ToDo("read lecture notes"));
+
+        assertEquals(List.of(uppercaseMatch), taskList.findTasks("Read"));
+    }
+
+    @Test
+    public void findTasks_emptyKeyword_returnsAllTasks() {
+        TaskList taskList = new TaskList();
+        Task firstTask = taskList.addTask(new ToDo("first task"));
+        Task secondTask = taskList.addTask(new ToDo("second task"));
+
+        assertEquals(List.of(firstTask, secondTask), taskList.findTasks(""));
+    }
+
+    @Test
+    public void findTasks_returnedList_cannotModifyTaskList() {
+        TaskList taskList = taskListWithOneTask();
+        List<Task> matches = taskList.findTasks("task");
+
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> matches.add(new ToDo("new task")));
+        assertEquals(1, taskList.getTasks().size());
+    }
+
+    @Test
+    public void findTasks_nullKeyword_throwsNullPointerException() {
+        TaskList taskList = taskListWithOneTask();
+
+        assertThrows(NullPointerException.class, () -> taskList.findTasks(null));
+    }
+
     private TaskList taskListWithOneTask() {
         TaskList taskList = new TaskList();
         taskList.addTask(new ToDo("only task"));

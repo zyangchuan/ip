@@ -19,6 +19,7 @@ public class ToolRegistry {
                 "delete", new DeleteTool(),
                 "deadline", new DeadlineTool(),
                 "event", new EventTool(),
+                "find", new FindTasksTool(),
                 "list", new ListTool(),
                 "mark", new MarkTool(),
                 "todo", new TodoTool(),

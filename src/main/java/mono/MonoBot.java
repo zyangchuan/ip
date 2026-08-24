@@ -35,6 +35,11 @@ public class MonoBot {
         this.ui.showTaskList(this.taskList.getTasks());
     }
 
+    /** Finds tasks containing a keyword and displays the matches. */
+    public void findTasks(String keyword) {
+        this.ui.showTaskList(this.taskList.findTasks(keyword));
+    }
+
     /** Marks a task done and displays the result. */
     public void markTaskDone(int id) throws NonExistentException {
         this.ui.showTaskMarkedDone(this.taskList.markTaskDone(id));

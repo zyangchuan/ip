@@ -20,6 +20,7 @@ public class ToolRegistryTest {
         assertInstanceOf(DeleteTool.class, registry.get("delete"));
         assertInstanceOf(DeadlineTool.class, registry.get("deadline"));
         assertInstanceOf(EventTool.class, registry.get("event"));
+        assertInstanceOf(FindTasksTool.class, registry.get("find"));
         assertInstanceOf(ListTool.class, registry.get("list"));
         assertInstanceOf(MarkTool.class, registry.get("mark"));
         assertInstanceOf(TodoTool.class, registry.get("todo"));

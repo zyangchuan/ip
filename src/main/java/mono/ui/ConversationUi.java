@@ -8,6 +8,10 @@ import java.util.List;
  * Formats and prints Mono's conversation responses.
  */
 public class ConversationUi {
+    /** Creates a console-based conversation user interface. */
+    public ConversationUi() {
+    }
+
     /** Prints Mono's greeting. */
     public void showGreeting() {
         String banner = "███╗   ███╗ ██████╗ ███╗   ██╗ ██████╗ \n" +
@@ -28,21 +32,35 @@ public class ConversationUi {
                 "____________________________________________________________\n");
     }
 
-    /** Prints the response for an added task. */
+    /**
+     * Prints the response for an added task.
+     *
+     * @param task task that was added
+     * @param count number of tasks after the addition
+     */
     public void showTaskAdded(Task task, int count) {
         System.out.print("____________________________________________________________\n" +
                 "Got it. I've added this task:\n" + task + "\nNow you have " + count +
                 " tasks in the list.\n____________________________________________________________\n");
     }
 
-    /** Prints the response for a deleted task. */
+    /**
+     * Prints the response for a deleted task.
+     *
+     * @param task task that was deleted
+     * @param count number of tasks after the deletion
+     */
     public void showTaskDeleted(Task task, int count) {
         System.out.print("____________________________________________________________\n" +
                 "Noted. I've removed this task:\n" + task + "\nNow you have " + count +
                 " tasks in the list.\n____________________________________________________________\n");
     }
 
-    /** Prints all tasks with one-based IDs. */
+    /**
+     * Prints all tasks with one-based IDs.
+     *
+     * @param tasks tasks to display
+     */
     public void showTaskList(List<Task> tasks) {
         System.out.print("____________________________________________________________\n" +
                 "Here are the tasks in your list:\n");
@@ -52,14 +70,22 @@ public class ConversationUi {
         System.out.println("____________________________________________________________");
     }
 
-    /** Prints the response for marking a task done. */
+    /**
+     * Prints the response for marking a task done.
+     *
+     * @param task task that was marked as completed
+     */
     public void showTaskMarkedDone(Task task) {
         System.out.print("____________________________________________________________\n" +
                 "Nice! I've marked this task as done:\n" + task +
                 "\n____________________________________________________________\n");
     }
 
-    /** Prints the response for unmarking a task. */
+    /**
+     * Prints the response for unmarking a task.
+     *
+     * @param task task that was marked as incomplete
+     */
     public void showTaskUnmarked(Task task) {
         System.out.print("____________________________________________________________\n" +
                 "OK, I've marked this task as not done yet:\n" + task +

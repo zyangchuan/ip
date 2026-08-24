@@ -13,6 +13,18 @@ import java.time.format.DateTimeParseException;
 public class DeadlineTool implements Tool {
     private static final String BY_MARKER = " /by ";
 
+    /** Creates a tool that adds deadline tasks. */
+    public DeadlineTool() {
+    }
+
+    /**
+     * Parses and adds a deadline task.
+     *
+     * @param arguments deadline description and date
+     * @param bot chatbot to which the deadline is added
+     * @return {@link ToolSignal#CONTINUE}
+     * @throws MonoException if the arguments or date are invalid
+     */
     @Override
     public ToolSignal invoke(String arguments, MonoBot bot) throws MonoException {
         int byIndex = arguments.lastIndexOf(BY_MARKER);

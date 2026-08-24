@@ -40,6 +40,12 @@ public class Event extends Task {
                 this.endDate);
     }
 
+    /**
+     * Returns this event's user-facing representation.
+     *
+     * @return task type, completion status, name, and formatted date range
+     */
+    @Override
     public String toString() {
         return String.format(
                 "[E][%s] %s (from: %s to: %s)",

@@ -18,13 +18,22 @@ public class MonoBot {
         this.ui = new ConversationUi();
     }
 
-    /** Adds a task and displays the result. */
+    /**
+     * Adds a task and displays the result.
+     *
+     * @param task task to add
+     */
     public void addTask(Task task) {
         Task addedTask = this.taskList.addTask(task);
         this.ui.showTaskAdded(addedTask, this.taskList.getTasks().size());
     }
 
-    /** Deletes a task and displays the result. */
+    /**
+     * Deletes a task and displays the result.
+     *
+     * @param id one-based task ID
+     * @throws NonExistentException if no task has the specified ID
+     */
     public void delete(int id) throws NonExistentException {
         Task deletedTask = this.taskList.delete(id);
         this.ui.showTaskDeleted(deletedTask, this.taskList.getTasks().size());
@@ -35,17 +44,31 @@ public class MonoBot {
         this.ui.showTaskList(this.taskList.getTasks());
     }
 
-    /** Finds tasks containing a keyword and displays the matches. */
+    /**
+     * Finds tasks containing a keyword and displays the matches.
+     *
+     * @param keyword text to find in task names
+     */
     public void findTasks(String keyword) {
         this.ui.showTaskList(this.taskList.findTasks(keyword));
     }
 
-    /** Marks a task done and displays the result. */
+    /**
+     * Marks a task done and displays the result.
+     *
+     * @param id one-based task ID
+     * @throws NonExistentException if no task has the specified ID
+     */
     public void markTaskDone(int id) throws NonExistentException {
         this.ui.showTaskMarkedDone(this.taskList.markTaskDone(id));
     }
 
-    /** Marks a task undone and displays the result. */
+    /**
+     * Marks a task undone and displays the result.
+     *
+     * @param id one-based task ID
+     * @throws NonExistentException if no task has the specified ID
+     */
     public void unmarkTaskDone(int id) throws NonExistentException {
         this.ui.showTaskUnmarked(this.taskList.unmarkTaskDone(id));
     }

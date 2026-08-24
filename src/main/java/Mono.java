@@ -11,6 +11,10 @@ import java.util.Scanner;
  * Starts Mono and dispatches user input to registered tools.
  */
 public class Mono {
+    /** Creates an application entry point. */
+    public Mono() {
+    }
+
     /**
      * Runs the chatbot's input loop.
      *

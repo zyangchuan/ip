@@ -12,6 +12,7 @@ public final class DateParser {
     private static final DateTimeFormatter DISPLAY_FORMAT =
             DateTimeFormatter.ofPattern("MMM dd yyyy", Locale.ENGLISH);
 
+    /** Prevents instantiation of this utility class. */
     private DateParser() {
         // Utility class; do not instantiate.
     }

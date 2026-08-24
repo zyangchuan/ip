@@ -14,6 +14,18 @@ public class EventTool implements Tool {
     private static final String FROM_MARKER = " /from ";
     private static final String TO_MARKER = " /to ";
 
+    /** Creates a tool that adds event tasks. */
+    public EventTool() {
+    }
+
+    /**
+     * Parses and adds an event task.
+     *
+     * @param arguments event description, start date, and end date
+     * @param bot chatbot to which the event is added
+     * @return {@link ToolSignal#CONTINUE}
+     * @throws MonoException if the arguments or dates are invalid
+     */
     @Override
     public ToolSignal invoke(String arguments, MonoBot bot) throws MonoException {
         int fromIndex = arguments.indexOf(FROM_MARKER);

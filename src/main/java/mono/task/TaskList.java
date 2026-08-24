@@ -27,6 +27,7 @@ public class TaskList {
      * Adds and persists a task.
      *
      * @param task task to add
+     * @return added task
      */
     public Task addTask(Task task) {
         this.tasks.add(task);
@@ -38,6 +39,7 @@ public class TaskList {
      * Deletes a task using a one-based ID.
      *
      * @param id one-based task ID
+     * @return deleted task
      * @throws NonExistentException if the ID is invalid
      */
     public Task delete(int id) throws NonExistentException {
@@ -48,7 +50,9 @@ public class TaskList {
     }
 
     /**
-     * Prints the current tasks with one-based IDs.
+     * Returns a snapshot of the current tasks.
+     *
+     * @return immutable task list
      */
     public List<Task> getTasks() {
         return List.copyOf(this.tasks);
@@ -73,6 +77,7 @@ public class TaskList {
      * Marks a task as completed and persists the change.
      *
      * @param id one-based task ID
+     * @return task marked as completed
      * @throws NonExistentException if the ID is invalid
      */
     public Task markTaskDone(int id) throws NonExistentException {
@@ -87,6 +92,7 @@ public class TaskList {
      * Marks a task as incomplete and persists the change.
      *
      * @param id one-based task ID
+     * @return task marked as incomplete
      * @throws NonExistentException if the ID is invalid
      */
     public Task unmarkTaskDone(int id) throws NonExistentException {

@@ -6,6 +6,10 @@ import mono.exception.EmptyInputException;
  * Splits a line of user input into a tool name and its arguments.
  */
 public class InputParser {
+    /** Creates an input parser. */
+    public InputParser() {
+    }
+
     /**
      * Parses the tool name and arguments from a line entered by the user.
      *

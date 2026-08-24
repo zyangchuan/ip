@@ -6,6 +6,7 @@ import mono.exception.WrongFormatException;
  * Parses task IDs supplied to task-management tools.
  */
 public final class TaskIdParser {
+    /** Prevents instantiation of this utility class. */
     private TaskIdParser() {
     }
 

@@ -32,6 +32,12 @@ public class Deadline extends Task {
         return String.format("D | %d | %s | %s", super.isDone ? 1 : 0, super.name, this.date);
     }
 
+    /**
+     * Returns this deadline's user-facing representation.
+     *
+     * @return task type, completion status, name, and formatted deadline
+     */
+    @Override
     public String toString() {
         return String.format(
                 "[D][%s] %s (by: %s)",

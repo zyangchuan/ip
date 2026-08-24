@@ -4,6 +4,11 @@ package mono.exception;
  * Indicates that a task command does not follow one of the supported formats.
  */
 public class WrongFormatException extends MonoException {
+    /**
+     * Creates an exception for command arguments in an unsupported format.
+     *
+     * @param message user-facing explanation of the error
+     */
     public WrongFormatException(String message) {
         super(message);
     }

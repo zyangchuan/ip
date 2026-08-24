@@ -25,6 +25,13 @@ dependencies {
 test {
     useJUnitPlatform()
 
+    // Keep tests that exercise relative-path storage away from the user's real data file.
+    File testWorkingDirectory = layout.buildDirectory.dir('test-working-directory').get().asFile
+    doFirst {
+        testWorkingDirectory.mkdirs()
+    }
+    workingDir testWorkingDirectory
+
     testLogging {
         events 'passed', 'skipped', 'failed'
 

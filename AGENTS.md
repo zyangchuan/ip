@@ -28,6 +28,12 @@ Unless the user says otherwise, assume that you are assisting a student working 
 
 Ensure that Java 25 is used when running the application or build tasks. On macOS, use `sdk use java 25.0.3.fx-zulu` to switch to Java 25 if needed.
 
+## Testing
+
+Maintain JUnit test coverage for approximately the top 50% highest-value methods. Prioritize complex methods, core behavior, and critical business logic rather than selecting methods solely to increase the raw coverage count.
+
+After every code change, review the affected behavior and update the JUnit tests as needed to continue meeting this target. Run the relevant Gradle tests with Java 25 to verify the changes.
+
 ## Git
 
 Use lightweight tags unless the user requests an annotated tag.
@@ -75,4 +81,3 @@ parent class named PersonAttribute.
 
 Using inheritance is preferable over composition in this situation
 because the common behaviors are not composable.
-

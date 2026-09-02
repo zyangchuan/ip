@@ -1,16 +1,16 @@
 package mono.storage;
 
-import mono.task.Deadline;
-import mono.task.Event;
-import mono.task.Task;
-import mono.task.ToDo;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+
+import mono.task.Deadline;
+import mono.task.Event;
+import mono.task.Task;
+import mono.task.ToDo;
 
 /**
  * Handles creation of Mono's task file and appending task records to it.
@@ -83,16 +83,16 @@ public class Storage {
     private Task parseTask(String[] fields) {
         try {
             Task task = switch (fields[0]) {
-            case "T" -> fields.length == 3
+                case "T" -> fields.length == 3
                     ? new ToDo(fields[2])
                     : null;
-            case "D" -> fields.length == 4
+                case "D" -> fields.length == 4
                     ? new Deadline(fields[2], fields[3])
                     : null;
-            case "E" -> fields.length == 5
+                case "E" -> fields.length == 5
                     ? new Event(fields[2], fields[3], fields[4])
                     : null;
-            default -> null;
+                default -> null;
             };
 
             if (task != null && (fields[1].equals("0") || fields[1].equals("1"))) {

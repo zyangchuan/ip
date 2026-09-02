@@ -38,15 +38,13 @@ public class EventTest {
 
     @Test
     public void constructor_invalidStartDate_throwsDateTimeParseException() {
-        assertThrows(
-                DateTimeParseException.class,
-                () -> new Event("project retreat", "not-a-date", "2026-09-03"));
+        assertThrows(DateTimeParseException.class, () -> new Event("project retreat",
+                "not-a-date", "2026-09-03"));
     }
 
     @Test
     public void constructor_invalidEndDate_throwsDateTimeParseException() {
-        assertThrows(
-                DateTimeParseException.class,
-                () -> new Event("project retreat", "2026-09-01", "not-a-date"));
+        assertThrows(DateTimeParseException.class, () -> new Event("project retreat",
+                "2026-09-01", "not-a-date"));
     }
 }

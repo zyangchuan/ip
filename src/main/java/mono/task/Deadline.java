@@ -1,8 +1,8 @@
 package mono.task;
 
-import mono.parser.DateParser;
-
 import java.time.LocalDate;
+
+import mono.parser.DateParser;
 
 /**
  * A task that must be completed by a specific calendar date.

@@ -81,17 +81,15 @@ public class EventToolTest {
     }
 
     private void assertFormatRejected(String arguments) {
-        WrongFormatException exception = assertThrows(
-                WrongFormatException.class,
-                () -> new EventTool().invoke(arguments, new MonoBot()));
+        WrongFormatException exception = assertThrows(WrongFormatException.class, () ->
+                new EventTool().invoke(arguments, new MonoBot()));
 
         assertEquals(FORMAT_MESSAGE, exception.getMessage());
     }
 
     private void assertDateRejected(String arguments) {
-        WrongFormatException exception = assertThrows(
-                WrongFormatException.class,
-                () -> new EventTool().invoke(arguments, new MonoBot()));
+        WrongFormatException exception = assertThrows(WrongFormatException.class, () ->
+                new EventTool().invoke(arguments, new MonoBot()));
 
         assertEquals(DATE_MESSAGE, exception.getMessage());
     }

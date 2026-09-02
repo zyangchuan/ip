@@ -1,12 +1,12 @@
 package mono.task;
 
-import mono.exception.NonExistentException;
-import mono.storage.Storage;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
+import mono.exception.NonExistentException;
+import mono.storage.Storage;
 
 /**
  * Owns Mono's task collection and all operations that change or display it.

@@ -158,9 +158,7 @@ public class TaskListTest {
         TaskList taskList = taskListWithOneTask();
         List<Task> matches = taskList.findTasks("task");
 
-        assertThrows(
-                UnsupportedOperationException.class,
-                () -> matches.add(new ToDo("new task")));
+        assertThrows(UnsupportedOperationException.class, () -> matches.add(new ToDo("new task")));
         assertEquals(1, taskList.getTasks().size());
     }
 

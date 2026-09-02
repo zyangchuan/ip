@@ -68,18 +68,16 @@ public class DeadlineToolTest {
 
     @Test
     public void invoke_invalidDate_throwsWrongFormatException() {
-        WrongFormatException exception = assertThrows(
-                WrongFormatException.class,
-                () -> new DeadlineTool().invoke(
+        WrongFormatException exception = assertThrows(WrongFormatException.class, () ->
+                new DeadlineTool().invoke(
                         "submit report /by 2026-09-31", new MonoBot()));
 
         assertEquals(DATE_MESSAGE, exception.getMessage());
     }
 
     private void assertFormatRejected(String arguments) {
-        WrongFormatException exception = assertThrows(
-                WrongFormatException.class,
-                () -> new DeadlineTool().invoke(arguments, new MonoBot()));
+        WrongFormatException exception = assertThrows(WrongFormatException.class, () ->
+                new DeadlineTool().invoke(arguments, new MonoBot()));
 
         assertEquals(FORMAT_MESSAGE, exception.getMessage());
     }

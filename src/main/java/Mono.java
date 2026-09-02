@@ -1,11 +1,11 @@
+import java.util.Scanner;
+
 import mono.MonoBot;
 import mono.exception.MonoException;
 import mono.parser.InputParser;
 import mono.tool.Tool;
 import mono.tool.ToolRegistry;
 import mono.tool.ToolSignal;
-
-import java.util.Scanner;
 
 /**
  * Starts Mono and dispatches user input to registered tools.
@@ -48,9 +48,9 @@ public class Mono {
      */
     private static void printError(MonoException exception) {
         System.out.print(
-                "____________________________________________________________\n" +
-                        exception.getMessage() + "\n" +
-                        "____________________________________________________________\n"
+                "____________________________________________________________\n"
+                        + exception.getMessage() + "\n"
+                        + "____________________________________________________________\n"
         );
     }
 }

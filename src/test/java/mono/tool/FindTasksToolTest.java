@@ -28,9 +28,8 @@ public class FindTasksToolTest {
     public void invoke_emptyArguments_throwsWrongFormatException() {
         RecordingMonoBot bot = new RecordingMonoBot();
 
-        WrongFormatException exception = assertThrows(
-                WrongFormatException.class,
-                () -> new FindTasksTool().invoke(" \t ", bot));
+        WrongFormatException exception = assertThrows(WrongFormatException.class, () ->
+                new FindTasksTool().invoke(" \t ", bot));
 
         assertEquals("Find format: find <keyword>", exception.getMessage());
         assertNull(bot.searchedKeyword);

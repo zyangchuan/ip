@@ -1,8 +1,8 @@
 package mono.tool;
 
-import mono.exception.UnknownToolException;
-
 import java.util.Map;
+
+import mono.exception.UnknownToolException;
 
 /**
  * Stores and resolves the tools available to Mono.

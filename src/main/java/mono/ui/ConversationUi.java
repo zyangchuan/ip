@@ -1,15 +1,29 @@
 package mono.ui;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 import mono.task.Task;
 
 /**
- * Formats and prints Mono's conversation responses.
+ * Formats Mono's conversation responses and sends them to an output destination.
  */
 public class ConversationUi {
+    private final Consumer<String> output;
+
     /** Creates a console-based conversation user interface. */
     public ConversationUi() {
+        this(System.out::print);
+    }
+
+    /**
+     * Creates a conversation user interface that sends responses to a callback.
+     *
+     * @param output destination for complete response messages
+     */
+    public ConversationUi(Consumer<String> output) {
+        this.output = Objects.requireNonNull(output, "output");
     }
 
     /** Prints Mono's greeting. */
@@ -20,14 +34,14 @@ public class ConversationUi {
                 + "██║╚██╔╝██║██║   ██║██║╚██╗██║██║   ██║\n"
                 + "██║ ╚═╝ ██║╚██████╔╝██║ ╚████║╚██████╔╝\n"
                 + "╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝ ";
-        System.out.print("____________________________________________________________\n"
+        emit("____________________________________________________________\n"
                 + banner + "\nHello! I'm Mono.\nWhat can I do for you?\n"
                 + "____________________________________________________________\n");
     }
 
     /** Prints Mono's farewell. */
     public void showExit() {
-        System.out.print("____________________________________________________________\n"
+        emit("____________________________________________________________\n"
                 + "Bye. Hope to see you again soon!\n"
                 + "____________________________________________________________\n");
     }
@@ -39,7 +53,7 @@ public class ConversationUi {
      * @param count number of tasks after the addition
      */
     public void showTaskAdded(Task task, int count) {
-        System.out.print("____________________________________________________________\n"
+        emit("____________________________________________________________\n"
                 + "Got it. I've added this task:\n" + task + "\nNow you have " + count
                 + " tasks in the list.\n____________________________________________________________\n");
     }
@@ -51,7 +65,7 @@ public class ConversationUi {
      * @param count number of tasks after the deletion
      */
     public void showTaskDeleted(Task task, int count) {
-        System.out.print("____________________________________________________________\n"
+        emit("____________________________________________________________\n"
                 + "Noted. I've removed this task:\n" + task + "\nNow you have " + count
                 + " tasks in the list.\n____________________________________________________________\n");
     }
@@ -62,12 +76,14 @@ public class ConversationUi {
      * @param tasks tasks to display
      */
     public void showTaskList(List<Task> tasks) {
-        System.out.print("____________________________________________________________\n"
-                + "Here are the tasks in your list:\n");
+        StringBuilder response = new StringBuilder(
+                "____________________________________________________________\n"
+                        + "Here are the tasks in your list:\n");
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println((i + 1) + "." + tasks.get(i));
+            response.append(i + 1).append(".").append(tasks.get(i)).append("\n");
         }
-        System.out.println("____________________________________________________________");
+        response.append("____________________________________________________________\n");
+        emit(response.toString());
     }
 
     /**
@@ -76,7 +92,7 @@ public class ConversationUi {
      * @param task task that was marked as completed
      */
     public void showTaskMarkedDone(Task task) {
-        System.out.print("____________________________________________________________\n"
+        emit("____________________________________________________________\n"
                 + "Nice! I've marked this task as done:\n" + task
                 + "\n____________________________________________________________\n");
     }
@@ -87,8 +103,13 @@ public class ConversationUi {
      * @param task task that was marked as incomplete
      */
     public void showTaskUnmarked(Task task) {
-        System.out.print("____________________________________________________________\n"
+        emit("____________________________________________________________\n"
                 + "OK, I've marked this task as not done yet:\n" + task
                 + "\n____________________________________________________________\n");
+    }
+
+    /** Sends one complete response to the configured output destination. */
+    private void emit(String response) {
+        this.output.accept(response);
     }
 }

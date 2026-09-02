@@ -1,56 +1,47 @@
-import java.util.Scanner;
+import java.io.IOException;
 
-import mono.MonoBot;
-import mono.exception.MonoException;
-import mono.parser.InputParser;
-import mono.tool.Tool;
-import mono.tool.ToolRegistry;
-import mono.tool.ToolSignal;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 /**
- * Starts Mono and dispatches user input to registered tools.
+ * Starts Mono's JavaFX application.
  */
-public class Mono {
+public class Mono extends Application {
     /** Creates an application entry point. */
     public Mono() {
     }
 
     /**
-     * Runs the chatbot's input loop.
+     * Launches Mono's graphical user interface.
      *
-     * @param args command-line arguments, which Mono does not use
+     * @param args command-line arguments passed to JavaFX
      */
     public static void main(String[] args) {
-        MonoBot bot = new MonoBot();
-        ToolRegistry registry = new ToolRegistry();
-        bot.greet();
-
-        try (Scanner scanner = new Scanner(System.in)) {
-            while (scanner.hasNextLine()) {
-                try {
-                    InputParser.ToolInput input = InputParser.parse(scanner.nextLine());
-                    Tool tool = registry.get(input.name());
-                    ToolSignal signal = tool.invoke(input.arguments(), bot);
-                    if (signal == ToolSignal.EXIT) {
-                        break;
-                    }
-                } catch (MonoException e) {
-                    printError(e);
-                }
-            }
-        }
+        launch(args);
     }
 
     /**
-     * Prints an exception message using Mono's standard response format.
+     * Loads and displays Mono's FXML-defined window.
      *
-     * @param exception exception to display
+     * @param stage primary JavaFX stage
+     * @throws IOException if the FXML layout cannot be loaded
      */
-    private static void printError(MonoException exception) {
-        System.out.print(
-                "____________________________________________________________\n"
-                        + exception.getMessage() + "\n"
-                        + "____________________________________________________________\n"
-        );
+    @Override
+    public void start(Stage stage) throws IOException {
+        FXMLLoader loader = new FXMLLoader(
+                Mono.class.getResource("/mono/ui/mono-view.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root, 900, 680);
+        scene.getStylesheets().add(
+                Mono.class.getResource("/mono/ui/mono.css").toExternalForm());
+
+        stage.setTitle("Mono — Your Task Companion");
+        stage.setMinWidth(640);
+        stage.setMinHeight(520);
+        stage.setScene(scene);
+        stage.show();
     }
 }

@@ -1,5 +1,7 @@
 package mono;
 
+import java.util.Objects;
+
 import mono.exception.NonExistentException;
 import mono.task.Task;
 import mono.task.TaskList;
@@ -14,8 +16,17 @@ public class MonoBot {
 
     /** Creates Mono with its persisted task list and console UI. */
     public MonoBot() {
+        this(new ConversationUi());
+    }
+
+    /**
+     * Creates Mono with a caller-supplied conversation output destination.
+     *
+     * @param ui conversation UI used to display responses
+     */
+    public MonoBot(ConversationUi ui) {
         this.taskList = new TaskList();
-        this.ui = new ConversationUi();
+        this.ui = Objects.requireNonNull(ui, "ui");
     }
 
     /**

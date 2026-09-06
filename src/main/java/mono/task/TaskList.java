@@ -20,7 +20,11 @@ public class TaskList {
      */
     public TaskList() {
         this.storage = new Storage();
-        this.tasks = new ArrayList<>(Arrays.asList(this.storage.readStorage()));
+        Task[] storedTasks = this.storage.readStorage();
+        assert storedTasks != null : "Storage must return a task array, even when empty";
+        this.tasks = new ArrayList<>(Arrays.asList(storedTasks));
+        assert this.tasks.stream().allMatch(Objects::nonNull)
+                : "A task list must never contain null tasks";
     }
 
     /**
@@ -30,7 +34,12 @@ public class TaskList {
      * @return added task
      */
     public Task addTask(Task task) {
+        assert task != null : "A task list can only contain real task objects";
+        int previousSize = this.tasks.size();
         this.tasks.add(task);
+        assert this.tasks.size() == previousSize + 1
+                && this.tasks.get(previousSize) == task
+                : "Adding a task must append that exact task to the list";
         saveTasks();
         return task;
     }
@@ -44,7 +53,11 @@ public class TaskList {
      */
     public Task delete(int id) throws NonExistentException {
         validateTaskId(id);
-        Task task = this.tasks.remove(id - 1);
+        int zeroBasedIndex = id - 1;
+        assert zeroBasedIndex >= 0 && zeroBasedIndex < this.tasks.size()
+                : "Task ID validation must establish a safe zero-based index";
+        Task task = this.tasks.remove(zeroBasedIndex);
+        assert task != null : "A validated task-list entry must not be null";
         saveTasks();
         return task;
     }
@@ -83,7 +96,9 @@ public class TaskList {
     public Task markTaskDone(int id) throws NonExistentException {
         validateTaskId(id);
         Task task = this.tasks.get(id - 1);
+        assert task != null : "A validated task-list entry must not be null";
         task.markDone();
+        assert task.isDone : "markTaskDone must return a completed task";
         saveTasks();
         return task;
     }
@@ -98,7 +113,9 @@ public class TaskList {
     public Task unmarkTaskDone(int id) throws NonExistentException {
         validateTaskId(id);
         Task task = this.tasks.get(id - 1);
+        assert task != null : "A validated task-list entry must not be null";
         task.unmarkDone();
+        assert !task.isDone : "unmarkTaskDone must return an incomplete task";
         saveTasks();
         return task;
     }
@@ -113,12 +130,16 @@ public class TaskList {
         if (id < 1 || id > this.tasks.size()) {
             throw new NonExistentException("Task " + id + " does not exist.");
         }
+        assert id >= 1 && id <= this.tasks.size()
+                : "Successful task-ID validation must establish list bounds";
     }
 
     /**
      * Persists the complete current task collection.
      */
     private void saveTasks() {
+        assert this.tasks.stream().allMatch(Objects::nonNull)
+                : "Only non-null tasks may be persisted";
         this.storage.saveTasks(this.tasks.toArray(new Task[0]));
     }
 }

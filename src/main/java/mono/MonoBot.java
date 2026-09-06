@@ -36,6 +36,7 @@ public class MonoBot {
      */
     public void addTask(Task task) {
         Task addedTask = this.taskList.addTask(task);
+        assert addedTask == task : "TaskList.addTask must return the task it stores";
         this.ui.showTaskAdded(addedTask, this.taskList.getTasks().size());
     }
 

@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.net.URL;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -31,12 +32,14 @@ public class Mono extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(
-                Mono.class.getResource("/mono/ui/mono-view.fxml"));
+        URL viewResource = Mono.class.getResource("/mono/ui/mono-view.fxml");
+        assert viewResource != null : "The packaged FXML view must be available";
+        FXMLLoader loader = new FXMLLoader(viewResource);
         Parent root = loader.load();
         Scene scene = new Scene(root, 900, 680);
-        scene.getStylesheets().add(
-                Mono.class.getResource("/mono/ui/mono.css").toExternalForm());
+        URL stylesheetResource = Mono.class.getResource("/mono/ui/mono.css");
+        assert stylesheetResource != null : "The packaged stylesheet must be available";
+        scene.getStylesheets().add(stylesheetResource.toExternalForm());
 
         stage.setTitle("Mono — Your Task Companion");
         stage.setMinWidth(640);

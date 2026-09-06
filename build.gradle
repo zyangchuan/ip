@@ -31,6 +31,7 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    enableAssertions = true
 
     // Keep tests that exercise relative-path storage away from the user's real data file.
     File testWorkingDirectory = layout.buildDirectory.dir('test-working-directory').get().asFile
@@ -66,6 +67,7 @@ shadowJar {
 }
 
 run {
+    enableAssertions = true
     standardInput = System.in
 }
 

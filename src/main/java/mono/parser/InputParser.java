@@ -40,5 +40,11 @@ public class InputParser {
      * @param arguments tool arguments
      */
     public record ToolInput(String name, String arguments) {
+        /** Verifies the invariant shared by all parsed command values. */
+        public ToolInput {
+            assert name != null && !name.isEmpty()
+                    : "A tool input must have a non-empty tool name";
+            assert arguments != null : "A tool input must have non-null arguments";
+        }
     }
 }

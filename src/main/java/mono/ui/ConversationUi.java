@@ -10,6 +10,10 @@ import mono.task.Task;
  * Formats Mono's conversation responses and sends them to an output destination.
  */
 public class ConversationUi {
+    /** Separator used to frame every response shown to the user. */
+    private static final String RESPONSE_SEPARATOR =
+            "____________________________________________________________";
+
     private final Consumer<String> output;
 
     /** Creates a console-based conversation user interface. */
@@ -34,16 +38,16 @@ public class ConversationUi {
                 + "██║╚██╔╝██║██║   ██║██║╚██╗██║██║   ██║\n"
                 + "██║ ╚═╝ ██║╚██████╔╝██║ ╚████║╚██████╔╝\n"
                 + "╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝ ";
-        emit("____________________________________________________________\n"
+        emit(RESPONSE_SEPARATOR + "\n"
                 + banner + "\nHello! I'm Mono.\nWhat can I do for you?\n"
-                + "____________________________________________________________\n");
+                + RESPONSE_SEPARATOR + "\n");
     }
 
     /** Prints Mono's farewell. */
     public void showExit() {
-        emit("____________________________________________________________\n"
+        emit(RESPONSE_SEPARATOR + "\n"
                 + "Bye. Hope to see you again soon!\n"
-                + "____________________________________________________________\n");
+                + RESPONSE_SEPARATOR + "\n");
     }
 
     /**
@@ -53,9 +57,9 @@ public class ConversationUi {
      * @param count number of tasks after the addition
      */
     public void showTaskAdded(Task task, int count) {
-        emit("____________________________________________________________\n"
+        emit(RESPONSE_SEPARATOR + "\n"
                 + "Got it. I've added this task:\n" + task + "\nNow you have " + count
-                + " tasks in the list.\n____________________________________________________________\n");
+                + " tasks in the list.\n" + RESPONSE_SEPARATOR + "\n");
     }
 
     /**
@@ -65,9 +69,9 @@ public class ConversationUi {
      * @param count number of tasks after the deletion
      */
     public void showTaskDeleted(Task task, int count) {
-        emit("____________________________________________________________\n"
+        emit(RESPONSE_SEPARATOR + "\n"
                 + "Noted. I've removed this task:\n" + task + "\nNow you have " + count
-                + " tasks in the list.\n____________________________________________________________\n");
+                + " tasks in the list.\n" + RESPONSE_SEPARATOR + "\n");
     }
 
     /**
@@ -77,12 +81,12 @@ public class ConversationUi {
      */
     public void showTaskList(List<Task> tasks) {
         StringBuilder response = new StringBuilder(
-                "____________________________________________________________\n"
+                RESPONSE_SEPARATOR + "\n"
                         + "Here are the tasks in your list:\n");
         for (int i = 0; i < tasks.size(); i++) {
             response.append(i + 1).append(".").append(tasks.get(i)).append("\n");
         }
-        response.append("____________________________________________________________\n");
+        response.append(RESPONSE_SEPARATOR).append("\n");
         emit(response.toString());
     }
 
@@ -92,9 +96,9 @@ public class ConversationUi {
      * @param task task that was marked as completed
      */
     public void showTaskMarkedDone(Task task) {
-        emit("____________________________________________________________\n"
+        emit(RESPONSE_SEPARATOR + "\n"
                 + "Nice! I've marked this task as done:\n" + task
-                + "\n____________________________________________________________\n");
+                + "\n" + RESPONSE_SEPARATOR + "\n");
     }
 
     /**
@@ -103,9 +107,9 @@ public class ConversationUi {
      * @param task task that was marked as incomplete
      */
     public void showTaskUnmarked(Task task) {
-        emit("____________________________________________________________\n"
+        emit(RESPONSE_SEPARATOR + "\n"
                 + "OK, I've marked this task as not done yet:\n" + task
-                + "\n____________________________________________________________\n");
+                + "\n" + RESPONSE_SEPARATOR + "\n");
     }
 
     /** Sends one complete response to the configured output destination. */

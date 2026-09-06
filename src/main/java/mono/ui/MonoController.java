@@ -45,6 +45,12 @@ public class MonoController {
      */
     @FXML
     private void initialize() {
+        assert this.conversationBox != null
+                && this.conversationScroll != null
+                && this.commandField != null
+                && this.sendButton != null
+                && this.statusLabel != null
+                : "FXML must inject all controls before initialization";
         this.registry = new ToolRegistry();
         this.bot = new MonoBot(new ConversationUi(this::appendBotMessage));
         this.conversationBox.heightProperty().addListener((observable, oldHeight, newHeight) ->
@@ -63,7 +69,9 @@ public class MonoController {
         try {
             InputParser.ToolInput input = InputParser.parse(command);
             Tool tool = this.registry.get(input.name());
+            assert tool != null : "The registry must return a tool for a known command";
             ToolSignal signal = tool.invoke(input.arguments(), this.bot);
+            assert signal != null : "Every tool invocation must return a control signal";
             if (signal == ToolSignal.EXIT) {
                 endSession();
             }
@@ -79,6 +87,8 @@ public class MonoController {
      */
     @FXML
     private void handleCommandSuggestion(ActionEvent event) {
+        assert event != null && event.getSource() instanceof Button
+                : "Command suggestions must originate from a button";
         Button source = (Button) event.getSource();
         this.commandField.setText(source.getText());
         this.commandField.requestFocus();

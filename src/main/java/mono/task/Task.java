@@ -16,18 +16,22 @@ public class Task {
      * @param name task description
      */
     public Task(String name) {
+        assert name != null : "A task must always have a non-null description";
         this.name = name;
         this.isDone = false;
+        assert !this.isDone : "A newly created task must be incomplete";
     }
 
     /** Marks this task as completed. */
     public void markDone() {
         this.isDone = true;
+        assert this.isDone : "markDone must leave the task completed";
     }
 
     /** Marks this task as incomplete. */
     public void unmarkDone() {
         this.isDone = false;
+        assert !this.isDone : "unmarkDone must leave the task incomplete";
     }
 
     /**

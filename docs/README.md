@@ -4,6 +4,8 @@
 add, view, search, complete, reopen, and delete tasks. Mono saves changes
 automatically in `data/tasks.txt`.
 
+![Mono user interface](Ui.png)
+
 ## Getting started
 
 Download the latest mono.jar from the [Mono releases page](https://github.com/zyangchuan/ip/releases).

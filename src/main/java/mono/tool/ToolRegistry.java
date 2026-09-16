@@ -37,7 +37,7 @@ public class ToolRegistry {
     public Tool get(String name) throws UnknownToolException {
         Tool tool = this.tools.get(name);
         if (tool == null) {
-            throw new UnknownToolException("Error: Tool is unknown.");
+            throw new UnknownToolException("Tool is unknown.");
         }
         return tool;
     }

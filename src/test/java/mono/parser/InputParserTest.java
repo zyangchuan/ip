@@ -38,7 +38,7 @@ public class InputParserTest {
         EmptyInputException exception = assertThrows(
                 EmptyInputException.class, () -> InputParser.parse(""));
 
-        assertEquals("Error: Input cannot be empty!", exception.getMessage());
+        assertEquals("Input cannot be empty!", exception.getMessage());
     }
 
     @Test

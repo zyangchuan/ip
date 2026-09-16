@@ -21,8 +21,8 @@
 }
 
 .header-subtitle {
-    -fx-text-fill: #aebbd1;
-    -fx-font-size: 12px;
+    -fx-text-fill: #E8EFFF;
+    -fx-font-size: 14px;
 }
 
 .conversation-scroll {
@@ -97,8 +97,8 @@
 }
 
 .suggestion-label {
-    -fx-text-fill: #26344d;
-    -fx-font-size: 12px;
+    -fx-text-fill: #000000;
+    -fx-font-size: 14px;
 }
 
 .suggestion-button {
@@ -106,7 +106,7 @@
     -fx-background-radius: 12px;
     -fx-text-fill: #26344d;
     -fx-font-family: "SF Mono", "Menlo", monospace;
-    -fx-font-size: 11px;
+    -fx-font-size: 14px;
     -fx-padding: 5px 10px 5px 10px;
 }
 
@@ -119,9 +119,9 @@
     -fx-background-radius: 10px;
     -fx-border-color: #dbe1ec;
     -fx-border-radius: 10px;
-    -fx-font-size: 13px;
+    -fx-font-size: 15px;
     -fx-padding: 11px 14px 11px 14px;
-    -fx-prompt-text-fill: #65738a;
+    -fx-prompt-text-fill: #000000;
     -fx-text-fill: #1f2d43;
 }
 

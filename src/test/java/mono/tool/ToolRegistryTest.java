@@ -32,6 +32,6 @@ public class ToolRegistryTest {
         UnknownToolException exception = assertThrows(
                 UnknownToolException.class, () -> new ToolRegistry().get("remind"));
 
-        assertEquals("Error: Tool is unknown.", exception.getMessage());
+        assertEquals("Tool is unknown.", exception.getMessage());
     }
 }

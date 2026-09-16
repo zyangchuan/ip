@@ -1,6 +1,7 @@
 package mono.storage;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -81,6 +82,30 @@ public class StorageTest {
                     "E | 1 | event | 2026-09-02 | 2026-09-03"
                 },
                 toFileStrings(tasks));
+    }
+
+    @Test
+    public void readStorage_recordsWithInvalidDatesAndMissingFields_skipsInvalidLines()
+            throws IOException {
+        new Storage();
+        Files.writeString(STORAGE_FILE, String.join(System.lineSeparator(),
+                "D | 0 | invalid date | 2026-02-30",
+                "E | 0 | missing end | 2026-09-01",
+                "E | 0 | invalid range | not-a-date | 2026-09-03",
+                "T | 0 | valid task"));
+
+        assertEquals("T | 0 | valid task", new Storage().readStorage()[0].toFileString());
+        assertEquals(1, new Storage().readStorage().length);
+    }
+
+    @Test
+    public void saveTasks_emptyArray_clearsExistingStorage() {
+        Storage storage = new Storage();
+        storage.saveTasks(new Task[]{new ToDo("old task")});
+
+        storage.saveTasks(new Task[0]);
+
+        assertEquals(0, storage.readStorage().length);
     }
 
     private String[] toFileStrings(Task[] tasks) {

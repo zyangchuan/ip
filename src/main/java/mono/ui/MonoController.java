@@ -115,7 +115,8 @@ public class MonoController {
         authorLabel.getStyleClass().add("message-author");
 
         Label messageLabel = new Label(message);
-        messageLabel.setWrapText(true);
+        // Keep multiline fixed-width content, such as the greeting banner, aligned.
+        messageLabel.setWrapText(!message.contains("\n"));
         messageLabel.getStyleClass().add("message-text");
 
         VBox bubble = new VBox(4, authorLabel, messageLabel);

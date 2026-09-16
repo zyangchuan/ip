@@ -73,7 +73,7 @@
 }
 
 .message-text {
-    -fx-font-family: "SF Mono", "Menlo", monospace;
+    -fx-font-family: "Menlo", "Courier New", monospace;
     -fx-font-size: 13px;
     -fx-line-spacing: 2px;
 }

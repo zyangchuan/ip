@@ -45,4 +45,9 @@ public class InputParserTest {
     public void parse_whitespaceOnlyInput_throwsEmptyInputException() {
         assertThrows(EmptyInputException.class, () -> InputParser.parse(" \t\n "));
     }
+
+    @Test
+    public void parse_nullInput_throwsEmptyInputException() {
+        assertThrows(EmptyInputException.class, () -> InputParser.parse(null));
+    }
 }

@@ -9,6 +9,8 @@ import mono.task.ToDo;
  * Creates a to-do task from a description.
  */
 public class TodoTool implements Tool {
+    private static final String FORMAT_MESSAGE = "Todo format: todo <description>";
+
     /** Creates a tool that adds to-do tasks. */
     public TodoTool() {
     }
@@ -23,10 +25,14 @@ public class TodoTool implements Tool {
      */
     @Override
     public ToolSignal invoke(String arguments, MonoBot bot) throws MonoException {
+        if (arguments == null) {
+            throw new WrongFormatException(FORMAT_MESSAGE);
+        }
         String description = arguments.trim();
         if (description.isEmpty()) {
-            throw new WrongFormatException("Todo format: todo <description>");
+            throw new WrongFormatException(FORMAT_MESSAGE);
         }
+        TaskDescriptionValidator.validate(description, FORMAT_MESSAGE);
         bot.addTask(new ToDo(description));
         return ToolSignal.CONTINUE;
     }

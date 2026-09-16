@@ -51,6 +51,15 @@ public class TaskIdParserTest {
     }
 
     @Test
+    public void parse_nullInput_throwsRequiredIdException() {
+        WrongFormatException exception = assertThrows(
+                WrongFormatException.class, () -> TaskIdParser.parse(null));
+
+        assertEquals("Task ID is required.", exception.getMessage());
+        assertNull(exception.getCause());
+    }
+
+    @Test
     public void parse_zero_throwsInvalidIdException() {
         WrongFormatException exception = assertThrows(
                 WrongFormatException.class, () -> TaskIdParser.parse("0"));

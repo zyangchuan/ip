@@ -39,6 +39,21 @@ public class BasicToolTest {
     }
 
     @Test
+    public void todo_unsafeDescription_throwsFormatExceptionWithoutSaving() {
+        WrongFormatException exception = assertThrows(WrongFormatException.class, () ->
+                new TodoTool().invoke("buy | sell", new MonoBot()));
+
+        assertEquals("Todo format: todo <description>", exception.getMessage());
+        assertEquals(0, new Storage().readStorage().length);
+    }
+
+    @Test
+    public void todo_nullArguments_throwsFormatException() {
+        assertThrows(WrongFormatException.class, () ->
+                new TodoTool().invoke(null, new MonoBot()));
+    }
+
+    @Test
     public void list_withoutArguments_displaysAndContinues() throws MonoException {
         assertEquals(ToolSignal.CONTINUE, new ListTool().invoke("", new MonoBot()));
     }

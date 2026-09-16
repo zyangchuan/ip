@@ -12,6 +12,8 @@ import mono.task.Deadline;
  */
 public class DeadlineTool implements Tool {
     private static final String BY_MARKER = " /by ";
+    private static final String FORMAT_MESSAGE =
+            "Deadline format: deadline <description> /by <date>";
 
     /** Creates a tool that adds deadline tasks. */
     public DeadlineTool() {
@@ -27,18 +29,20 @@ public class DeadlineTool implements Tool {
      */
     @Override
     public ToolSignal invoke(String arguments, MonoBot bot) throws MonoException {
+        if (arguments == null) {
+            throw new WrongFormatException(FORMAT_MESSAGE);
+        }
         int byIndex = arguments.lastIndexOf(BY_MARKER);
         if (byIndex <= 0) {
-            throw new WrongFormatException(
-                    "Deadline format: deadline <description> /by <date>");
+            throw new WrongFormatException(FORMAT_MESSAGE);
         }
 
         String description = arguments.substring(0, byIndex).trim();
         String dateText = arguments.substring(byIndex + BY_MARKER.length()).trim();
         if (description.isEmpty() || dateText.isEmpty()) {
-            throw new WrongFormatException(
-                    "Deadline format: deadline <description> /by <date>");
+            throw new WrongFormatException(FORMAT_MESSAGE);
         }
+        TaskDescriptionValidator.validate(description, FORMAT_MESSAGE);
 
         try {
             bot.addTask(new Deadline(description, dateText));

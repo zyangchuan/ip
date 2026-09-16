@@ -71,6 +71,11 @@ public class EventToolTest {
     }
 
     @Test
+    public void invoke_descriptionWithStorageDelimiter_throwsWrongFormatException() {
+        assertFormatRejected("project | retreat /from 2026-09-01 /to 2026-09-03");
+    }
+
+    @Test
     public void invoke_invalidStartDate_throwsWrongFormatException() {
         assertDateRejected("project retreat /from invalid /to 2026-09-03");
     }

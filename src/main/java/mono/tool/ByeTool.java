@@ -22,7 +22,7 @@ public class ByeTool implements Tool {
      */
     @Override
     public ToolSignal invoke(String arguments, MonoBot bot) throws MonoException {
-        if (!arguments.isEmpty()) {
+        if (arguments == null || !arguments.isEmpty()) {
             throw new WrongFormatException("bye does not accept arguments.");
         }
         bot.exit();

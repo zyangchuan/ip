@@ -13,6 +13,8 @@ import mono.task.Event;
 public class EventTool implements Tool {
     private static final String FROM_MARKER = " /from ";
     private static final String TO_MARKER = " /to ";
+    private static final String FORMAT_MESSAGE =
+            "Event format: event <description> /from <start-date> /to <end-date>";
 
     /** Creates a tool that adds event tasks. */
     public EventTool() {
@@ -28,11 +30,13 @@ public class EventTool implements Tool {
      */
     @Override
     public ToolSignal invoke(String arguments, MonoBot bot) throws MonoException {
+        if (arguments == null) {
+            throw new WrongFormatException(FORMAT_MESSAGE);
+        }
         int fromIndex = arguments.indexOf(FROM_MARKER);
         int toIndex = arguments.indexOf(TO_MARKER);
         if (fromIndex <= 0 || toIndex <= fromIndex + FROM_MARKER.length()) {
-            throw new WrongFormatException(
-                    "Event format: event <description> /from <start-date> /to <end-date>");
+            throw new WrongFormatException(FORMAT_MESSAGE);
         }
 
         String description = arguments.substring(0, fromIndex).trim();
@@ -40,9 +44,9 @@ public class EventTool implements Tool {
                 .substring(fromIndex + FROM_MARKER.length(), toIndex).trim();
         String endDateText = arguments.substring(toIndex + TO_MARKER.length()).trim();
         if (description.isEmpty() || startDateText.isEmpty() || endDateText.isEmpty()) {
-            throw new WrongFormatException(
-                    "Event format: event <description> /from <start-date> /to <end-date>");
+            throw new WrongFormatException(FORMAT_MESSAGE);
         }
+        TaskDescriptionValidator.validate(description, FORMAT_MESSAGE);
 
         try {
             bot.addTask(new Event(description, startDateText, endDateText));

@@ -18,6 +18,9 @@ public class InputParser {
      * @throws EmptyInputException if the input contains no non-whitespace characters
      */
     public static ToolInput parse(String input) throws EmptyInputException {
+        if (input == null) {
+            throw new EmptyInputException("Error: Input cannot be empty!");
+        }
         String trimmedInput = input.trim();
         if (trimmedInput.isEmpty()) {
             throw new EmptyInputException("Error: Input cannot be empty!");

@@ -22,6 +22,9 @@ public class FindTasksTool implements Tool {
      */
     @Override
     public ToolSignal invoke(String arguments, MonoBot bot) throws MonoException {
+        if (arguments == null) {
+            throw new WrongFormatException("Find format: find <keyword>");
+        }
         String keyword = arguments.trim();
         if (keyword.isEmpty()) {
             throw new WrongFormatException("Find format: find <keyword>");

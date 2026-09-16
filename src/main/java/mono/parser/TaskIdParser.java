@@ -18,6 +18,9 @@ public final class TaskIdParser {
      * @throws WrongFormatException if the task ID is empty, non-numeric, or non-positive
      */
     public static int parse(String arguments) throws WrongFormatException {
+        if (arguments == null) {
+            throw new WrongFormatException("Task ID is required.");
+        }
         String taskId = arguments.trim();
 
         if (taskId.isEmpty()) {

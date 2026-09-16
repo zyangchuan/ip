@@ -67,6 +67,11 @@ public class DeadlineToolTest {
     }
 
     @Test
+    public void invoke_descriptionWithStorageDelimiter_throwsWrongFormatException() {
+        assertFormatRejected("submit | report /by 2026-09-01");
+    }
+
+    @Test
     public void invoke_invalidDate_throwsWrongFormatException() {
         WrongFormatException exception = assertThrows(WrongFormatException.class, () ->
                 new DeadlineTool().invoke(
